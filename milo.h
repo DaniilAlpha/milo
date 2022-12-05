@@ -5,6 +5,10 @@
 #define MILO_FATAL 1
 #define MILO_SILENT 0
 
+#ifndef MILO_LVL
+#define MILO_LVL MILO_SILENT
+#endif
+
 #if MILO_LVL >= MILO_ALL
 #define deb(fmt, ...) printf("[deb] " fmt "\n", ##__VA_ARGS__)
 #else
