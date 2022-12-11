@@ -1,39 +1,35 @@
-#define MILO_ALL 5
-#define MILO_INFO 4
-#define MILO_WARNING 3
-#define MILO_ERROR 2
-#define MILO_FATAL 1
-#define MILO_SILENT 0
+#define MILO_LVL_ALL 5
+#define MILO_LVL_INFO 4
+#define MILO_LVL_WARN 3
+#define MILO_LVL_ERROR 2
+#define MILO_LVL_FATAL 1
+#define MILO_LVL_SILENT 0
 
-#ifndef MILO_LVL
-#define MILO_LVL MILO_SILENT
-#endif
-
-#if MILO_LVL >= MILO_ALL
-#define deb(fmt, ...) printf("[deb] " fmt "\n", ##__VA_ARGS__)
+#if MILO_LVL >= MILO_LVL_ALL
+#define trace(fmt, ...) printf("[trace] " fmt "\n", ##__VA_ARGS__)
 #else
-#define deb(fmt, ...)
+#define trace(fmt, ...)
 #endif
 
-#if MILO_LVL >= MILO_INFO
-#define inf(fmt, ...) printf("[inf] " fmt "\n", ##__VA_ARGS__)
+#if MILO_LVL >= MILO_LVL_INFO
+#define info(fmt, ...) printf("[info ] " fmt "\n", ##__VA_ARGS__)
 #else
-#define inf(fmt, ...)
+#define info(fmt, ...)
 #endif
 
-#if MILO_LVL >= MILO_WARNING
-#define war(fmt, ...) printf("[war] " fmt "\n", ##__VA_ARGS__)
+#if MILO_LVL >= MILO_LVL_WARN
+#define warn(fmt, ...) printf("[warn ] " fmt "\n", ##__VA_ARGS__)
 #else
-#define war(fmt, ...)
+#define warn(fmt, ...)
 #endif
 
-#if MILO_LVL >= MILO_ERROR
-#define err(fmt, ...) printf("[err] " fmt "\n", ##__VA_ARGS__)
+#if MILO_LVL >= MILO_LVL_ERROR
+#define error(fmt, ...) printf("[error] " fmt "\n", ##__VA_ARGS__)
 #else
-#define err(fmt, ...)
+#define error(fmt, ...)
 #endif
 
-#if MILO_LVL >= MILO_FATAL
+#if MILO_LVL >= MILO_LVL_FATAL
 #define fatal(fmt, ...) printf("[fatal] " fmt "\n", ##__VA_ARGS__)
 #else
 #define fatal(fmt, ...)
