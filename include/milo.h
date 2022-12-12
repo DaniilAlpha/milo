@@ -44,4 +44,8 @@
 #undef MILO_LVL
 #endif
 
-#undef 
+#undef trace
+#undef info
+#undef warn
+#undef error
+#undef fatal

@@ -2,10 +2,7 @@
 A set of macros to prevent boilerplate logging code.
 
 Format examples:
-"[foo.c:76 <span style="color:red">error</span>] hello foo"
-"[bar.c:54 <span style="color:yellow">warn</span>] hello foo"
-"[main.c:32 <span style="color:green">info</span>] hello world"
-"[qux_quux.h:10 <span style="color:blue">trace</span>] hello qux and quux"
+```comming soon```
 
 Usage example (similar to printf()):
 ```c

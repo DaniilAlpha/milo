@@ -6,7 +6,7 @@
 #endif
 
 #if MILO_USE_TA
-#define MILO_TA_BLUE "\x1B[0;34m"
+#define MILO_TA_BLUE "\x1B[0;35m"
 #define MILO_TA_GREEN "\x1B[0;32m"
 #define MILO_TA_YELLOW "\x1B[0;33m"
 #define MILO_TA_RED "\x1B[0;31m"
