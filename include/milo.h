@@ -58,3 +58,7 @@
 #else
 #define fatal(fmt, ...)
 #endif
+
+#ifndef MILO_LVL
+#undef MILO_LVL
+#endif
