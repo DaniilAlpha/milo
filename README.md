@@ -1,8 +1,8 @@
 # milo (micro logging)
 A set of (only) macros to prevent boilerplate logging code.
 
-Format examples:
-```comming soon```
+Output examples:
+![output examples](https://github.com/DaniilAlpha/milo/example.png)
 
 Usage example (similar to printf()):
 ```c
