@@ -1,5 +1,5 @@
 # milo (micro logging)
-A set of macros to prevent boilerplate logging code.
+A set of (only) macros to prevent boilerplate logging code.
 
 Format examples:
 ```comming soon```
