@@ -2,7 +2,9 @@
 A set of (only) macros to prevent boilerplate logging code.
 
 Output examples:
+<pre>
 ![output examples](https://raw.githubusercontent.com/DaniilAlpha/milo/main/example.png)
+</pre>
 
 Usage example (similar to printf()):
 ```c
