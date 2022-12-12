@@ -6,7 +6,7 @@
 #endif
 
 #if MILO_USE_TA
-#define MILO_TA_TRACE "\x1B[0;35m"
+#define MILO_TA_TRACE "\x1B[0;36m"
 #define MILO_TA_INFO "\x1B[0;32m"
 #define MILO_TA_WARN "\x1B[0;33m"
 #define MILO_TA_ERROR "\x1B[0;31m"
