@@ -20,11 +20,11 @@
 #define MILO_TA_RED "\x1B[0;31m"
 #define MILO_TA_CLEAR "\x1B[0m"
 #else
-#define MILO_BLUE_COLOR
-#define MILO_GREEN_COLOR
-#define MILO_YELLOW_COLOR
-#define MILO_RED_COLOR
-#define MILO_DEFAULT_COLOR
+#define MILO_TA_BLUE
+#define MILO_TA_GREEN
+#define MILO_TA_YELLOW
+#define MILO_TA_RED
+#define MILO_TA_CLEAR
 #endif
 
 #define MILO_FILENAME (strrchr(__FILE__, '/') + 1)
