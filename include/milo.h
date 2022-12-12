@@ -59,6 +59,7 @@
 #define fatal(fmt, ...)
 #endif
 
-#ifndef MILO_LVL
+// undefine MILO_LVL to get rid of compiler warnings
+#ifdef MILO_LVL
 #undef MILO_LVL
 #endif
