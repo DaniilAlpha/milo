@@ -17,7 +17,7 @@
 
 #if MILO_LVL >= MILO_LVL_ALL
 /// @brief Prints trace.
-#define trace(fmt, ...) ({ printf("[%s:%i " MILO_TA_BLUE "trace" MILO_TA_CLEAR "] " fmt "\n", _MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define trace(fmt, ...) ({ printf("[%s:%i " MILO_TA_BLUE "trace" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
 #define trace(fmt, ...)
@@ -25,7 +25,7 @@
 
 #if MILO_LVL >= MILO_LVL_INFO
 /// @brief Prints info.
-#define info(fmt, ...) ({ printf("[%s:%i " MILO_TA_GREEN "info" MILO_TA_CLEAR "] " fmt "\n", _MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define info(fmt, ...) ({ printf("[%s:%i " MILO_TA_GREEN "info" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
 #define info(fmt, ...)
@@ -33,7 +33,7 @@
 
 #if MILO_LVL >= MILO_LVL_WARN
 /// @brief Prints warning.
-#define warn(fmt, ...) ({ printf("[%s:%i " MILO_TA_YELLOW "warn" MILO_TA_CLEAR "] " fmt "\n", _MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define warn(fmt, ...) ({ printf("[%s:%i " MILO_TA_YELLOW "warn" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
 #define warn(fmt, ...)
@@ -41,7 +41,7 @@
 
 #if MILO_LVL >= MILO_LVL_ERROR
 /// @brief Prints error.
-#define error(fmt, ...) ({ printf("[%s:%i " MILO_TA_RED "error" MILO_TA_CLEAR "] " fmt "\n", _MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define error(fmt, ...) ({ printf("[%s:%i " MILO_TA_RED "error" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
 #define error(fmt, ...)
@@ -49,7 +49,7 @@
 
 #if MILO_LVL >= MILO_LVL_FATAL
 /// @brief Prints fatal error.
-#define fatal(fmt, ...) ({ printf("[%s:%i " MILO_TA_RED "fatal" MILO_TA_CLEAR "] " fmt "\n", _MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define fatal(fmt, ...) ({ printf("[%s:%i " MILO_TA_RED "fatal" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
 #define fatal(fmt, ...)
