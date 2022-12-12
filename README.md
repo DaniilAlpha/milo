@@ -2,7 +2,7 @@
 A set of (only) macros to prevent boilerplate logging code.
 
 Output examples:
-![output examples](https://github.com/DaniilAlpha/milo/example.png)
+![output examples](https://github.com/DaniilAlpha/milo/example.png?raw=true)
 
 Usage example (similar to printf()):
 ```c
