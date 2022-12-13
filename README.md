@@ -15,7 +15,7 @@ Set of (only) macros to get rid of boilerplate logging code.
 #define MILO_LVL MILO_ALL
 #include <milo.h>
 
-int foo()
+void foo()
 {
     trace("hello trace");
     info("hello info");
