@@ -1,7 +1,7 @@
 #ifndef _INC_MILO_FILENAME
 #define _INC_MILO_FILENAME
 
-// name of this file
+// current file name
 #define MILO_FILENAME (strrchr(__FILE__, '/') + 1)
 
 #endif

@@ -1,9 +1,9 @@
 # milo (micro logging)
 Set of (only) macros to get rid of boilerplate logging code.
 
-## format example
+## example
 <p>
-    <img src="https://raw.githubusercontent.com/DaniilAlpha/milo/main/example.png" alt="format example" />
+    <img src="https://raw.githubusercontent.com/DaniilAlpha/milo/main/example.png" alt="example" />
 </p>
 
 ## usage example (similar to printf()):
