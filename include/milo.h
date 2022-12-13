@@ -7,7 +7,9 @@
 #endif
 
 // if already defined - undefine to get rid of compiler warnings
-#ifdef MILO_DEFINED
+#ifndef _INC_MILO
+#define _INC_MILO
+#else
 #undef trace
 #undef info
 #undef warn
@@ -54,9 +56,6 @@
 /// @brief Does nothing.
 #define fatal(fmt, ...)
 #endif
-
-// a way to check if milo already defined
-#define MILO_DEFINED
 
 // undefine MILO_LVL to get rid of compiler warnings
 #ifdef MILO_LVL
