@@ -1,11 +1,12 @@
 # milo (micro logging)
-A set of (only) macros to prevent boilerplate logging code.
+Set of (only) macros to get rid of boilerplate logging code.
 
-Output examples:
-<br>
-![output examples](https://raw.githubusercontent.com/DaniilAlpha/milo/main/example.png)
+## format example
+<p>
+    <img src="https://raw.githubusercontent.com/DaniilAlpha/milo/main/example.png" alt="format example" />
+</p>
 
-Usage example (similar to printf()):
+## usage example (similar to printf()):
 ```c
 // foo.c
 
@@ -23,11 +24,10 @@ int foo()
         warn("hello warn #%i", i);
 
     error("hello %s", "error");
-    fatal("hello %.5s", "fatality");
+    fatal("hello %.5s", "fatal error");
 }
 ```
-
-It is possible to use different `MILO_LVL`s for different files, for example:
+It is possible to use different `MILO_LVLs` for different files, for example
 ```c
 // bar.c
 
@@ -39,8 +39,9 @@ It is possible to use different `MILO_LVL`s for different files, for example:
 
 void bar()
 {
-    foo(); // will print all messages
-    error("hello bar"); // will print an error
-    info("hello foo"); // will not do anything
+    error("hello error"); // will print an error
+    info("hello nothing"); // won't do anything
+    
+    foo(); // will print all messages, as expected
 }
 ```
