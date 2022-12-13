@@ -1,5 +1,5 @@
-#ifndef _INC_TEXT_ATTR
-#define _INC_TEXT_ATTR
+#ifndef _INC_MILO_TEXT_ATTR
+#define _INC_MILO_TEXT_ATTR
 
 #ifndef MILO_USE_TA
 #define MILO_USE_TA 1
