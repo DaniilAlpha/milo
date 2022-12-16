@@ -45,3 +45,19 @@ void bar()
     foo(); // will print all messages, as expected
 }
 ```
+If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TA` as 0, for example
+```c
+// qux.c
+
+/* 
+this line should be before the first include of the library, because this is
+one-off define 
+*/
+#define MILO_USE_TA 0
+
+// ...other includes...
+
+#include <milo.h>
+
+// ...code...
+```
