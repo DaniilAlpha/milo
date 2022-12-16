@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include "milo_lvl.h"
 #include "milo_text_attr.h"
 #include "milo_filename.h"
