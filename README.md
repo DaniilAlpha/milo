@@ -56,6 +56,8 @@ one-off define
 #define MILO_USE_TA 0
 
 // ...other includes...
+#include "foo.c"
+#include "bar.h"
 
 #include <milo.h>
 
