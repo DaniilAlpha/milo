@@ -53,7 +53,7 @@ If you don't want to use text attributes (or they are not working), you can disa
 this line should be before the first include of the library, because this is
 one-off define 
 */
-#define MILO_USE_TA 0
+#define MILO_USE_TA (0)
 
 // ...other includes...
 #include "foo.c"
