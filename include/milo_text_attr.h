@@ -2,7 +2,7 @@
 #define _INC_MILO_TEXT_ATTR
 
 #ifndef MILO_USE_TA
-#define MILO_USE_TA 1
+#define MILO_USE_TA (1)
 #endif
 
 #if MILO_USE_TA
