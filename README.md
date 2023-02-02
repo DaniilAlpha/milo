@@ -12,7 +12,7 @@ Set of (only) macros to get rid of boilerplate logging code.
 
 // ...other includes...
 
-#define MILO_LVL MILO_ALL
+#define MILO_LVL MILO_TRACE /* the same as MILO_ALL */
 #include <milo.h>
 
 void foo()
@@ -49,10 +49,8 @@ If you don't want to use text attributes (or they are not working), you can disa
 ```c
 // qux.c
 
-/* 
-this line should be before the first include of the library, because this is
-one-off define 
-*/
+
+// this is one-off define, so it should be before the first include 
 #define MILO_USE_TA (0)
 
 // ...other includes...

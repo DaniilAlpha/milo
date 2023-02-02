@@ -9,10 +9,6 @@
 #define MILO_LVL MILO_LVL_INFO
 #endif
 
-#ifndef MILO_LABEL
-#define MILO_LABEL ""
-#endif
-
 // if already defined - undefine to get rid of compiler warnings
 #ifndef _INC_MILO
 #define _INC_MILO
@@ -27,7 +23,7 @@
 
 #if MILO_LVL >= MILO_LVL_ALL
 /// @brief Prints a trace message.
-#define trace(fmt, ...) ({ printf("[%s:%i " MILO_TA_TRACE "trace" MILO_TA_CLEAR "] " MILO_LABEL fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define trace(fmt, ...) ({ printf("[%s:%i " MILO_TA_TRACE "trace" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
 #define trace(fmt, ...)
@@ -35,7 +31,7 @@
 
 #if MILO_LVL >= MILO_LVL_INFO
 /// @brief Prints an info message.
-#define info(fmt, ...) ({ printf("[%s:%i " MILO_TA_INFO "info" MILO_TA_CLEAR "] " MILO_LABEL fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define info(fmt, ...) ({ printf("[%s:%i " MILO_TA_INFO "info" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
 #define info(fmt, ...)
@@ -43,7 +39,7 @@
 
 #if MILO_LVL >= MILO_LVL_WARN
 /// @brief Prints a warning message.
-#define warn(fmt, ...) ({ printf("[%s:%i " MILO_TA_WARN "warn" MILO_TA_CLEAR "] " MILO_LABEL fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define warn(fmt, ...) ({ printf("[%s:%i " MILO_TA_WARN "warn" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
 #define warn(fmt, ...)
@@ -51,7 +47,7 @@
 
 #if MILO_LVL >= MILO_LVL_ERROR
 /// @brief Prints an error message.
-#define error(fmt, ...) ({ printf("[%s:%i " MILO_TA_ERROR "error" MILO_TA_CLEAR "] " MILO_LABEL fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define error(fmt, ...) ({ printf("[%s:%i " MILO_TA_ERROR "error" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
 #define error(fmt, ...)
@@ -59,12 +55,11 @@
 
 #if MILO_LVL >= MILO_LVL_FATAL
 /// @brief Prints a fatal message.
-#define fatal(fmt, ...) ({ printf("[%s:%i " MILO_TA_FATAL "fatal" MILO_TA_CLEAR "] " MILO_LABEL fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define fatal(fmt, ...) ({ printf("[%s:%i " MILO_TA_FATAL "fatal" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
 #define fatal(fmt, ...)
 #endif
 
-// undefine MILO_LVL and MILO_LABEL to get rid of compiler warnings
+// undefine MILO_LVL to get rid of compiler warnings
 #undef MILO_LVL
-#undef MILO_LABEL
