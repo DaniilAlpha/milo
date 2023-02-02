@@ -18,7 +18,6 @@
 #undef warn
 #undef error
 #undef fatal
-#undef MILO_LVL
 #endif
 
 #if MILO_LVL >= MILO_LVL_ALL
