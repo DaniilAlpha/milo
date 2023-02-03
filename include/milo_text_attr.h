@@ -1,8 +1,10 @@
 #ifndef _INC_MILO_TEXT_ATTR
 #define _INC_MILO_TEXT_ATTR
 
+#include <stdbool.h>
+
 #ifndef MILO_USE_TA
-#define MILO_USE_TA (1)
+#define MILO_USE_TA (true)
 #endif
 
 #if MILO_USE_TA
@@ -13,12 +15,12 @@
 #define MILO_TA_FATAL "\x1B[1;31m"
 #define MILO_TA_CLEAR "\x1B[0m"
 #else
-#define MILO_TA_TRACE 
-#define MILO_TA_INFO 
-#define MILO_TA_WARN 
-#define MILO_TA_ERROR 
-#define MILO_TA_FATAL 
-#define MILO_TA_CLEAR 
+#define MILO_TA_TRACE
+#define MILO_TA_INFO
+#define MILO_TA_WARN
+#define MILO_TA_ERROR
+#define MILO_TA_FATAL
+#define MILO_TA_CLEAR
 #endif
 
 #endif
