@@ -50,10 +50,11 @@ If you don't want to use text attributes (or they are not working), you can disa
 ```c
 // main.c
 
-// this is one-off define, so it should be before the first include 
+// this is a one-off definition, so it should be before the first include
 #define MILO_USE_TEXT_ATTR (0)
 
 // ...other includes...
+
 #include "foo.c"
 #include "bar.h"
 
