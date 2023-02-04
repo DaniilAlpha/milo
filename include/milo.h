@@ -3,13 +3,13 @@
 
 #include "milo_lvl.h"
 #include "milo_text_attr.h"
-#include "milo_filename.h"
+#include "milo_current_file.h"
 
 #ifndef MILO_LVL
 #define MILO_LVL MILO_LVL_INFO
 #endif
 
-// if already defined - undefine to get rid of compiler warnings
+// if already defined, undefine to remove compiler warnings
 #ifndef _INC_MILO
 #define _INC_MILO
 #else
@@ -22,43 +22,59 @@
 
 #if MILO_LVL >= MILO_LVL_ALL
 /// @brief Prints a trace message.
-#define trace(fmt, ...) ({ printf("[%s:%i " MILO_TA_TRACE "trace" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+/// @param format
+/// @return void
+#define trace(format, ...) ({ printf("[%s:%i " MILO_TEXT_ATTR_TRACE "trace" MILO_TEXT_ATTR_CLEAR "] " format "\n", MILO_CURRENT_FILE, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
-#define trace(fmt, ...)
+/// @return void
+#define trace(...)
 #endif
 
 #if MILO_LVL >= MILO_LVL_INFO
 /// @brief Prints an info message.
-#define info(fmt, ...) ({ printf("[%s:%i " MILO_TA_INFO "info" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+/// @param format
+/// @return void
+#define info(format, ...) ({ printf("[%s:%i " MILO_TEXT_ATTR_INFO "info" MILO_TEXT_ATTR_CLEAR "] " format "\n", MILO_CURRENT_FILE, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
-#define info(fmt, ...)
+/// @return void
+#define info(...)
 #endif
 
 #if MILO_LVL >= MILO_LVL_WARN
 /// @brief Prints a warning message.
-#define warn(fmt, ...) ({ printf("[%s:%i " MILO_TA_WARN "warn" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+/// @param format
+/// @return void
+#define warn(format, ...) ({ printf("[%s:%i " MILO_TEXT_ATTR_WARN "warn" MILO_TEXT_ATTR_CLEAR "] " format "\n", MILO_CURRENT_FILE, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
-#define warn(fmt, ...)
+/// @return void
+#define warn(...)
 #endif
 
 #if MILO_LVL >= MILO_LVL_ERROR
 /// @brief Prints an error message.
-#define error(fmt, ...) ({ printf("[%s:%i " MILO_TA_ERROR "error" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+/// @param format
+/// @return void
+#define error(format, ...) ({ printf("[%s:%i " MILO_TEXT_ATTR_ERROR "error" MILO_TEXT_ATTR_CLEAR "] " format "\n", MILO_CURRENT_FILE, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
-#define error(fmt, ...)
+/// @return void
+#define error(...)
 #endif
 
 #if MILO_LVL >= MILO_LVL_FATAL
 /// @brief Prints a fatal message.
-#define fatal(fmt, ...) ({ printf("[%s:%i " MILO_TA_FATAL "fatal" MILO_TA_CLEAR "] " fmt "\n", MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+/// @param format
+/// @return void
+#define fatal(format, ...) ({ printf("[%s:%i " MILO_TEXT_ATTR_FATAL "fatal" MILO_TEXT_ATTR_CLEAR "] " format "\n", MILO_CURRENT_FILE, __LINE__, ##__VA_ARGS__); })
 #else
 /// @brief Does nothing.
-#define fatal(fmt, ...)
+/// @param format
+/// @return void
+#define fatal(...)
 #endif
 
-// undefine MILO_LVL to get rid of compiler warnings
+// makes MILO_LVL unique for each file
 #undef MILO_LVL

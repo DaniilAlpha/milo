@@ -12,7 +12,7 @@ Set of (only) macros to get rid of boilerplate logging code.
 
 // ...other includes...
 
-#define MILO_LVL MILO_TRACE /* the same as MILO_ALL */
+#define MILO_LVL MILO_TRACE /* same as MILO_ALL */
 #include <milo.h>
 
 void foo()
@@ -32,6 +32,7 @@ It is possible to use different `MILO_LVLs` for different files, for example
 // bar.c
 
 // ...other includes...
+
 #include "foo.c"
 
 #define MILO_LVL MILO_ERROR
@@ -40,18 +41,17 @@ It is possible to use different `MILO_LVLs` for different files, for example
 void bar()
 {
     error("hello error"); // will print an error
-    info("hello nothing"); // won't do anything
+    info("hello nothing"); // will not do anything
     
     foo(); // will print all messages, as expected
 }
 ```
-If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TA` as 0, for example
+If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TEXT_ATTR` as 0, for example
 ```c
-// qux.c
-
+// main.c
 
 // this is one-off define, so it should be before the first include 
-#define MILO_USE_TA (0)
+#define MILO_USE_TEXT_ATTR (0)
 
 // ...other includes...
 #include "foo.c"
