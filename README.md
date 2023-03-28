@@ -12,7 +12,7 @@ Set of (only) macros to get rid of boilerplate logging code.
 
 // ...other includes...
 
-#define MILO_LVL MILO_TRACE /* same as MILO_ALL */
+#define MILO_LVL MILO_LVL_TRACE /* same as MILO_LVL_ALL */
 #include <milo.h>
 
 void foo()
@@ -35,7 +35,7 @@ It is possible to use different `MILO_LVLs` for different files, for example
 
 #include "foo.c"
 
-#define MILO_LVL MILO_ERROR
+#define MILO_LVL MILO_LVL_ERROR
 #include <milo.h>
 
 void bar()
@@ -55,8 +55,7 @@ If you don't want to use text attributes (or they are not working), you can disa
 
 // ...other includes...
 
-#include "foo.c"
-#include "bar.h"
+#include "bar.c"
 
 #include <milo.h>
 
