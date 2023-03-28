@@ -67,12 +67,13 @@ If you don't want to use text attributes (or they are not working), you can disa
 // ...
 ```
 
-Also there is an opportunity to change the `printf` function by redefining the `milo_printf`, for example
+Also there is an opportunity to change the `milo_printf` and `milo_get_filename` functions by redefining them`, for example
 ```c
 // main.c
 
-// this is also a one-off definition
-#define milo_printf(format, ...) printf_s(format, ##__VA_ARGS__)
+// these are also one-off definitions
+#define milo_printf(format, ...) printf_s(format, ##__VA_ARGS__) // changes standard 'printf' to 'printf_s'
+#define milo_get_filename(filepath) filepath // changes showed filename to full path 
 
 // ...
 ```
