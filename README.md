@@ -48,7 +48,7 @@ void bar()
 }
 ```
 
-If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TEXT_ATTR` as 0 or simply defining `MILO_NO_TEXT_ATTR`, for example
+If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TEXT_ATTR` as `0` or simply defining `MILO_NO_TEXT_ATTR`, for example
 ```c
 // main.c
 
