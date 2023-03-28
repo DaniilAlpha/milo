@@ -27,6 +27,7 @@ void foo()
     fatal("hello %.5s", "fatal error");
 }
 ```
+
 It is possible to use different `MILO_LVLs` for different files, for example
 ```c
 // bar.c
@@ -46,6 +47,7 @@ void bar()
     foo(); // will print all messages, as expected
 }
 ```
+
 If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TEXT_ATTR` as 0, for example
 ```c
 // main.c
@@ -59,5 +61,15 @@ If you don't want to use text attributes (or they are not working), you can disa
 
 #include <milo.h>
 
-// ...code...
+// ...
+```
+
+Also there is an opportunity to change the 'printf' function by redefining the 'milo_printf', for example
+```c
+// main.c
+
+// this is also a one-off definition
+#define milo_printf(format, ...) printf_s(format, ##__VA_ARGS__)
+
+// ...
 ```
