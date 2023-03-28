@@ -6,7 +6,7 @@ Set of (only) macros to get rid of boilerplate logging code.
     <img src="https://raw.githubusercontent.com/DaniilAlpha/milo/main/example.png" alt="example" />
 </p>
 
-## usage example (similar to printf()):
+## usage example (same as printf()):
 ```c
 // foo.c
 
@@ -48,7 +48,7 @@ void bar()
 }
 ```
 
-If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TEXT_ATTR` as 0 or simply defining `MILO_NO_TEXT_ATTR`, for example
+If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TEXT_ATTR` as `0` or simply defining `MILO_NO_TEXT_ATTR`, for example
 ```c
 // main.c
 
