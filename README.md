@@ -28,7 +28,7 @@ void foo()
 }
 ```
 
-It is possible to use different `MILO_LVLs` for different files, for example
+Default `MILO_LVL` is `MILO_LVL_INFO`. It is possible to use different `MILO_LVLs` for different files, for example
 ```c
 // bar.c
 
@@ -48,7 +48,7 @@ void bar()
 }
 ```
 
-If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TEXT_ATTR` as `0` or simply defining `MILO_NO_TEXT_ATTR`, for example
+If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TEXT_ATTR` as `0` or simply defining `MILO_NO_TEXT_ATTR`. Also there is an opportunity to change the `milo_printf` function by redefining it, for example
 ```c
 // main.c
 
@@ -58,22 +58,9 @@ If you don't want to use text attributes (or they are not working), you can disa
 // or this
 #define MILO_NO_TEXT_ATTR
 
-// ...other includes...
-
-#include "bar.c"
-
-#include <milo.h>
-
-// ...
-```
-
-Also there is an opportunity to change the `milo_printf` and `milo_get_filename` functions by redefining them`, for example
-```c
-// main.c
-
-// these are also one-off definitions
-#define milo_printf(format, ...) printf_s(format, ##__VA_ARGS__) // changes standard 'printf' to 'printf_s'
-#define milo_get_filename(filepath) filepath // changes showed filename to full path 
+// this is also a one-off definition
+// changes standard 'printf' to the 'fprintf' into the stderr
+#define milo_printf(format, ...) fprintf(stderr, format, ##__VA_ARGS__) 
 
 // ...
 ```
