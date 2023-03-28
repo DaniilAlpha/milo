@@ -48,12 +48,15 @@ void bar()
 }
 ```
 
-If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TEXT_ATTR` as 0, for example
+If you don't want to use text attributes (or they are not working), you can disable them by defining `MILO_USE_TEXT_ATTR` as 0 or simply defining `MILO_NO_TEXT_ATTR`, for example
 ```c
 // main.c
 
 // this is a one-off definition, so it should be before the first include
+// you can do this
 #define MILO_USE_TEXT_ATTR (0)
+// or this
+#define MILO_NO_TEXT_ATTR
 
 // ...other includes...
 
@@ -64,7 +67,7 @@ If you don't want to use text attributes (or they are not working), you can disa
 // ...
 ```
 
-Also there is an opportunity to change the 'printf' function by redefining the 'milo_printf', for example
+Also there is an opportunity to change the `printf` function by redefining the `milo_printf`, for example
 ```c
 // main.c
 
