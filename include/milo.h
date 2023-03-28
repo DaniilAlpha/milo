@@ -25,7 +25,11 @@ const char *__milo_only_filename(const char *file_path)
 #define __MILO_FILENAME (__milo_only_filename(__FILE__))
 
 #ifndef MILO_USE_TEXT_ATTR
+#ifdef MILO_NO_TEXT_ATTR
+#define MILO_USE_TEXT_ATTR (0)
+#else
 #define MILO_USE_TEXT_ATTR (1)
+#endif
 #endif
 
 #if MILO_USE_TEXT_ATTR
@@ -69,7 +73,7 @@ const char *__milo_only_filename(const char *file_path)
 /// @brief Prints a trace message.
 /// @param format
 /// @return void
-#define trace(format, ...) ({ milo_printf("[%s:%i " MILO_TEXT_ATTR_TRACE "trace" MILO_TEXT_ATTR_CLEAR "] " format "\n", __MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define trace(format, ...) milo_printf("[%s:%i " MILO_TEXT_ATTR_TRACE "trace" MILO_TEXT_ATTR_CLEAR "] " format "\n", __MILO_FILENAME, __LINE__, ##__VA_ARGS__)
 #else
 /// @brief Does nothing.
 /// @return void
@@ -80,7 +84,7 @@ const char *__milo_only_filename(const char *file_path)
 /// @brief Prints an info message.
 /// @param format
 /// @return void
-#define info(format, ...) ({ milo_printf("[%s:%i " MILO_TEXT_ATTR_INFO "info" MILO_TEXT_ATTR_CLEAR "] " format "\n", __MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define info(format, ...) milo_printf("[%s:%i " MILO_TEXT_ATTR_INFO "info" MILO_TEXT_ATTR_CLEAR "] " format "\n", __MILO_FILENAME, __LINE__, ##__VA_ARGS__)
 #else
 /// @brief Does nothing.
 /// @return void
@@ -91,7 +95,7 @@ const char *__milo_only_filename(const char *file_path)
 /// @brief Prints a warning message.
 /// @param format
 /// @return void
-#define warn(format, ...) ({ milo_printf("[%s:%i " MILO_TEXT_ATTR_WARN "warn" MILO_TEXT_ATTR_CLEAR "] " format "\n", __MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define warn(format, ...) milo_printf("[%s:%i " MILO_TEXT_ATTR_WARN "warn" MILO_TEXT_ATTR_CLEAR "] " format "\n", __MILO_FILENAME, __LINE__, ##__VA_ARGS__)
 #else
 /// @brief Does nothing.
 /// @return void
@@ -102,7 +106,7 @@ const char *__milo_only_filename(const char *file_path)
 /// @brief Prints an error message.
 /// @param format
 /// @return void
-#define error(format, ...) ({ milo_printf("[%s:%i " MILO_TEXT_ATTR_ERROR "error" MILO_TEXT_ATTR_CLEAR "] " format "\n", __MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define error(format, ...) milo_printf("[%s:%i " MILO_TEXT_ATTR_ERROR "error" MILO_TEXT_ATTR_CLEAR "] " format "\n", __MILO_FILENAME, __LINE__, ##__VA_ARGS__)
 #else
 /// @brief Does nothing.
 /// @return void
@@ -113,7 +117,7 @@ const char *__milo_only_filename(const char *file_path)
 /// @brief Prints a fatal message.
 /// @param format
 /// @return void
-#define fatal(format, ...) ({ milo_printf("[%s:%i " MILO_TEXT_ATTR_FATAL "fatal" MILO_TEXT_ATTR_CLEAR "] " format "\n", __MILO_FILENAME, __LINE__, ##__VA_ARGS__); })
+#define fatal(format, ...) milo_printf("[%s:%i " MILO_TEXT_ATTR_FATAL "fatal" MILO_TEXT_ATTR_CLEAR "] " format "\n", __MILO_FILENAME, __LINE__, ##__VA_ARGS__)
 #else
 /// @brief Does nothing.
 /// @param format
