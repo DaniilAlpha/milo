@@ -6,7 +6,7 @@ Set of (only) macros to get rid of boilerplate logging code.
     <img src="https://raw.githubusercontent.com/DaniilAlpha/milo/main/example.png" alt="example" />
 </p>
 
-## usage example (similar to printf()):
+## usage example (same as printf()):
 ```c
 // foo.c
 
