@@ -7,7 +7,7 @@
 
 #include <string.h>
 
-const char *milo_get_filename(const char *filepath)
+inline const char *milo_get_filename(const char *filepath)
 {
     const char *result = strrchr(filepath, '/');
     return result == NULL ? filepath : result + 1;
