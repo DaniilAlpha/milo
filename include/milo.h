@@ -5,12 +5,15 @@
 #ifndef _INC_MILO
 #define _INC_MILO
 
+#ifndef milo_get_filename
 #include <string.h>
-const char *__milo_only_filename(const char *file_path)
-{
-    const char *result = strrchr(file_path, '/');
-    return result == NULL ? file_path : result + 1;
-}
+#define milo_get_filename(filepath) ({ const char *result = strrchr(filepath, '/'); result == NULL ? __FILE__ : result + 1; })
+#endif
+
+#ifndef milo_printf
+#include <stdio.h>
+#define milo_printf(format, ...) printf(format, ##__VA_ARGS__)
+#endif
 
 #define MILO_LVL_ALL MILO_LVL_TRACE
 #define MILO_LVL_TRACE (5)
@@ -20,9 +23,6 @@ const char *__milo_only_filename(const char *file_path)
 #define MILO_LVL_FATAL (1)
 #define MILO_LVL_SILENT MILO_LVL_NONE
 #define MILO_LVL_NONE (0)
-
-// #define milo_strrchr(str, char) ({ strrchr(__FILE__, '/'); })
-#define __MILO_FILENAME (__milo_only_filename(__FILE__))
 
 #ifndef MILO_USE_TEXT_ATTR
 #ifdef MILO_NO_TEXT_ATTR
@@ -48,10 +48,7 @@ const char *__milo_only_filename(const char *file_path)
 #define MILO_TEXT_ATTR_CLEAR
 #endif
 
-#ifndef milo_printf
-#include <stdio.h>
-#define milo_printf(format, ...) printf(format, ##__VA_ARGS__)
-#endif
+#define __MILO_FILENAME milo_get_filename(__FILE__)
 
 #else // ifndef _INC_MILO
 #undef trace
