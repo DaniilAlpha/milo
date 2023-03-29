@@ -1,5 +1,5 @@
 # milo (micro logging)
-Set of (only) macros to get rid of boilerplate logging code.
+Set of macros to get rid of boilerplate logging code.
 
 ## example
 <p>
