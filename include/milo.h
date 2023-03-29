@@ -5,15 +5,7 @@
 #ifndef _INC_MILO
 #define _INC_MILO
 
-#include <string.h>
-
-inline const char *milo_get_filename(const char *filepath)
-{
-    const char *result = strrchr(filepath, '\\');
-    if (result == NULL)
-        result = strrchr(filepath, '/');
-    return result == NULL ? filepath : result + 1;
-}
+const char *milo_get_filename(const char *filepath);
 
 #ifndef milo_printf
 #include <stdio.h>
