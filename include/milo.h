@@ -47,13 +47,13 @@ const char *milo_get_filename(const char *filepath);
 
   #define __MILO_FILENAME milo_get_filename(__FILE__)
 
-#else // ifndef _INC_MILO
+#else  // ifndef _INC_MILO
   #undef trace
   #undef info
   #undef warn
   #undef error
   #undef fatal
-#endif // ifndef _INC_MILO
+#endif  // ifndef _INC_MILO
 
 /***************
  ** sole part **
