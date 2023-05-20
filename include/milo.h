@@ -5,7 +5,13 @@
 #ifndef _INC_MILO
   #define _INC_MILO
 
+  #ifdef __cplusplus
+extern "C" {
+  #endif
 const char *milo_get_filename(const char *filepath);
+  #ifdef __cplusplus
+}
+  #endif
 
 // use stdio's printf if not provided
 
