@@ -7,10 +7,14 @@
 
 const char *milo_get_filename(const char *filepath);
 
+// use stdio's printf if not provided
+
   #ifndef milo_printf
     #include <stdio.h>
     #define milo_printf(format, ...) printf(format, ##__VA_ARGS__)
   #endif
+
+// milo levels
 
   #define MILO_LVL_ALL    MILO_LVL_TRACE
   #define MILO_LVL_TRACE  (5)
@@ -21,6 +25,8 @@ const char *milo_get_filename(const char *filepath);
   #define MILO_LVL_SILENT MILO_LVL_NONE
   #define MILO_LVL_NONE   (0)
 
+// determine wheter to use text attributes
+
   #ifndef MILO_USE_TEXT_ATTR
     #ifdef MILO_NO_TEXT_ATTR
       #define MILO_USE_TEXT_ATTR (0)
@@ -28,6 +34,8 @@ const char *milo_get_filename(const char *filepath);
       #define MILO_USE_TEXT_ATTR (1)
     #endif
   #endif
+
+// setup text attributes
 
   #if MILO_USE_TEXT_ATTR
     #define MILO_TEXT_ATTR_TRACE "\x1B[0;36m"
@@ -47,13 +55,13 @@ const char *milo_get_filename(const char *filepath);
 
   #define __MILO_FILENAME milo_get_filename(__FILE__)
 
-#else  // ifndef _INC_MILO
+#else  // undefine old macros
   #undef trace
   #undef info
   #undef warn
   #undef error
   #undef fatal
-#endif  // ifndef _INC_MILO
+#endif
 
 /***************
  ** sole part **
