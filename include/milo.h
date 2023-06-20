@@ -28,6 +28,9 @@ extern "C"
 # define MILO_LVL_FATAL  (1)
 # define MILO_LVL_SILENT MILO_LVL_NONE
 # define MILO_LVL_NONE   (0)
+# ifndef MILO_DEFAULT_LVL
+#  define MILO_DEFAULT_LVL MILO_LVL_INFO
+# endif
 
 // determine wheter to use text attributes
 
@@ -72,7 +75,7 @@ extern "C"
  ***************/
 
 #ifndef MILO_LVL
-# define MILO_LVL MILO_LVL_INFO
+# define MILO_LVL MILO_DEFAULT_LVL
 #endif
 
 #if MILO_LVL >= MILO_LVL_ALL
