@@ -1,4 +1,4 @@
-#include "milo.h"
+#include "../include/milo.h"
 
 #include <string.h>
 
