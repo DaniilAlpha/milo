@@ -2,23 +2,34 @@
  ** shared part **
  *****************/
 
-#ifndef _INC_MILO
-# define _INC_MILO
+#ifndef MILO_H
+# define MILO_H
 
 # ifdef __cplusplus
 extern "C"
 # endif
+  /// @brief Extracts filename from filepath.
+  /// @param filepath file path or name
+  /// @return pointer to the first character after last occurence of `\\` or `/`
   const char *
-  milo_get_filename(const char *filepath);
+  milo_filename(const char *const filepath);
 
-// use stdio's printf if not provided
+// `printf` and `eprintf`
 
-# ifndef milo_printf
+# if (!defined milo_printf)
+#  if (defined milo_eprintf)
+#   warning                                                                    \
+     "Your `milo_eprintf` will be redefined by MiLo because `milo_printf` wasn't defined. Consider either removing your definition for `milo_eprintf` or adding one for `milo_printf`."
+#  endif
+
 #  include <stdio.h>
-#  define milo_printf(format, ...) printf(format, ##__VA_ARGS__)
+#  define milo_printf(format, ...)  printf(format, ##__VA_ARGS__)
+#  define milo_eprintf(format, ...) fprintf(stderr, format, ##__VA_ARGS__)
+# elif (!defined milo_eprintf)
+#  define milo_eprintf milo_printf
 # endif
 
-// milo levels
+// levels
 
 # define MILO_LVL_ALL    MILO_LVL_TRACE
 # define MILO_LVL_TRACE  (5)
@@ -32,42 +43,61 @@ extern "C"
 #  define MILO_DEFAULT_LVL MILO_LVL_INFO
 # endif
 
-// determine wheter to use text attributes
+// text attributes
 
-# ifndef MILO_USE_TEXT_ATTR
-#  ifdef MILO_NO_TEXT_ATTR
-#   define MILO_USE_TEXT_ATTR (0)
+# if (!defined MILO_TA_TRACE && !defined MILO_TA_INFO && !defined MILO_TA_WARN && !defined MILO_TA_ERROR && !defined MILO_TA_FATAL && !defined MILO_TA_CLEAR && !defined MILO_TA_FILE)
+#  ifdef MILO_NO_TA
+#   define MILO_TA_TRACE ("")
+#   define MILO_TA_INFO  ("")
+#   define MILO_TA_WARN  ("")
+#   define MILO_TA_ERROR ("")
+#   define MILO_TA_FATAL ("")
+
+#   define MILO_TA_FILE
+#   define MILO_TA_CLEAR
 #  else
-#   define MILO_USE_TEXT_ATTR (1)
+#   define MILO_TA_TRACE ("\e[0;36m")
+#   define MILO_TA_INFO  ("\e[0;32m")
+#   define MILO_TA_WARN  ("\e[0;93m")
+#   define MILO_TA_ERROR ("\e[0;31m")
+#   define MILO_TA_FATAL ("\e[0;1;31m")
+
+#   define MILO_TA_FILE  "\e[0;2m"
+#   define MILO_TA_CLEAR "\e[0m"
 #  endif
 # endif
 
-// setup text attributes
+// level names
 
-# if MILO_USE_TEXT_ATTR
-#  define MILO_TEXT_ATTR_TRACE "\x1B[0;36m"
-#  define MILO_TEXT_ATTR_INFO  "\x1B[0;32m"
-#  define MILO_TEXT_ATTR_WARN  "\x1B[0;33m"
-#  define MILO_TEXT_ATTR_ERROR "\x1B[0;31m"
-#  define MILO_TEXT_ATTR_FATAL "\x1B[1;31m"
-#  define MILO_TEXT_ATTR_CLEAR "\x1B[0m"
-# else
-#  define MILO_TEXT_ATTR_TRACE
-#  define MILO_TEXT_ATTR_INFO
-#  define MILO_TEXT_ATTR_WARN
-#  define MILO_TEXT_ATTR_ERROR
-#  define MILO_TEXT_ATTR_FATAL
-#  define MILO_TEXT_ATTR_CLEAR
+# if (!defined MILO_LVL_NAME_TRACE && !defined MILO_LVL_NAME_INFO && !defined MILO_LVL_NAME_WARN && !defined MILO_LVL_NAME_ERROR && !defined MILO_LVL_NAME_FATAL)
+#  define MILO_LVL_NAME_TRACE ("trc")
+#  define MILO_LVL_NAME_INFO  ("inf")
+#  define MILO_LVL_NAME_WARN  ("wrn")
+#  define MILO_LVL_NAME_ERROR ("err")
+#  define MILO_LVL_NAME_FATAL ("ftl")
 # endif
 
-# define __MILO_FILENAME milo_get_filename(__FILE__)
+# define MILO_FILE (milo_filename(__FILE__))
+# define MILO_LINE (__LINE__)
+# define MILO_FUNC (__func__)
+
+# if (!defined MILO_PREFIX_FORMAT && !defined milo_prefix_args)
+#  define MILO_PREFIX_FORMAT                                                   \
+     MILO_TA_CLEAR "[%s%s" MILO_TA_CLEAR " " MILO_TA_FILE                      \
+                   "%s:%i" MILO_TA_CLEAR "] "  // space before log body
+#  define milo_prefix_args(attr, lvl) (attr), (lvl), MILO_FILE, MILO_LINE
+# endif
+
+# ifndef MILO_USE_SHORTCUTS
+#  define MILO_USE_SHORTCUTS (1)
+# endif
 
 #else  // undefine old macros
-# undef trace
-# undef info
-# undef warn
-# undef error
-# undef fatal
+# undef milo_trace
+# undef milo_info
+# undef milo_warn
+# undef milo_error
+# undef milo_fatal
 #endif
 
 /***************
@@ -78,95 +108,149 @@ extern "C"
 # define MILO_LVL MILO_DEFAULT_LVL
 #endif
 
-#if MILO_LVL >= MILO_LVL_ALL
+#if (MILO_LVL) >= (MILO_LVL_ALL)
 /// @brief Prints a trace message.
 /// @param format
-/// @return void
-# define trace(format, ...)                                                    \
+/// @return the same as underlying
+# define milo_trace(format, ...)                                               \
    milo_printf(                                                                \
-     "[%s:%i " MILO_TEXT_ATTR_TRACE "trace" MILO_TEXT_ATTR_CLEAR "] " format   \
-     "\n",                                                                     \
-     __MILO_FILENAME,                                                          \
-     __LINE__,                                                                 \
+     MILO_PREFIX_FORMAT format "\n",                                           \
+     milo_prefix_args(MILO_TA_TRACE, MILO_LVL_NAME_TRACE),                     \
      ##__VA_ARGS__                                                             \
    )
+
+# if (MILO_USE_SHORTCUTS)
+/// @brief Prints a trace message.
+/// @param format
+/// @return the same as underlying
+#  define trace milo_trace
+# endif
 #else
 /// @brief Does nothing.
 /// @return void
-# define trace(...)
+# define milo_trace(...)
+
+# if (MILO_USE_SHORTCUTS)
+/// @brief Does nothing.
+/// @return void
+#  define trace milo_trace
+# endif
 #endif
 
-#if MILO_LVL >= MILO_LVL_INFO
+#if (MILO_LVL) >= (MILO_LVL_INFO)
 /// @brief Prints an info message.
 /// @param format
-/// @return void
-# define info(format, ...)                                                     \
+/// @return the same as underlying
+# define milo_info(format, ...)                                                \
    milo_printf(                                                                \
-     "[%s:%i " MILO_TEXT_ATTR_INFO "info" MILO_TEXT_ATTR_CLEAR "] " format     \
-     "\n",                                                                     \
-     __MILO_FILENAME,                                                          \
-     __LINE__,                                                                 \
+     MILO_PREFIX_FORMAT format "\n",                                           \
+     milo_prefix_args(MILO_TA_INFO, MILO_LVL_NAME_INFO),                       \
      ##__VA_ARGS__                                                             \
    )
+
+# if (MILO_USE_SHORTCUTS)
+/// @brief Prints an info message.
+/// @param format
+/// @return the same as underlying
+#  define info milo_info
+# endif
 #else
 /// @brief Does nothing.
 /// @return void
-# define info(...)
+# define milo_info(...)
+
+# if (MILO_USE_SHORTCUTS)
+/// @brief Does nothing.
+/// @return void
+#  define info milo_info
+# endif
 #endif
 
-#if MILO_LVL >= MILO_LVL_WARN
+#if (MILO_LVL) >= (MILO_LVL_WARN)
 /// @brief Prints a warning message.
 /// @param format
-/// @return void
-# define warn(format, ...)                                                     \
+/// @return the same as underlying
+# define milo_warn(format, ...)                                                \
    milo_printf(                                                                \
-     "[%s:%i " MILO_TEXT_ATTR_WARN "warn" MILO_TEXT_ATTR_CLEAR "] " format     \
-     "\n",                                                                     \
-     __MILO_FILENAME,                                                          \
-     __LINE__,                                                                 \
+     MILO_PREFIX_FORMAT format "\n",                                           \
+     milo_prefix_args(MILO_TA_WARN, MILO_LVL_NAME_WARN),                       \
      ##__VA_ARGS__                                                             \
    )
+
+# if (MILO_USE_SHORTCUTS)
+/// @brief Prints a warning message.
+/// @param format
+/// @return the same as underlying
+#  define warn milo_warn
+# endif
 #else
 /// @brief Does nothing.
 /// @return void
-# define warn(...)
+# define milo_warn(...)
+
+# if (MILO_USE_SHORTCUTS)
+/// @brief Does nothing.
+/// @return void
+#  define warn milo_warn
+# endif
 #endif
 
-#if MILO_LVL >= MILO_LVL_ERROR
+#if (MILO_LVL) >= (MILO_LVL_ERROR)
 /// @brief Prints an error message.
 /// @param format
-/// @return void
-# define error(format, ...)                                                    \
-   milo_printf(                                                                \
-     "[%s:%i " MILO_TEXT_ATTR_ERROR "error" MILO_TEXT_ATTR_CLEAR "] " format   \
-     "\n",                                                                     \
-     __MILO_FILENAME,                                                          \
-     __LINE__,                                                                 \
+/// @return the same as underlying
+# define milo_error(format, ...)                                               \
+   milo_eprintf(                                                               \
+     MILO_PREFIX_FORMAT format "\n",                                           \
+     milo_prefix_args(MILO_TA_ERROR, MILO_LVL_NAME_ERROR),                     \
      ##__VA_ARGS__                                                             \
    )
+
+# if (MILO_USE_SHORTCUTS)
+/// @brief Prints an error message.
+/// @param format
+/// @return the same as underlying
+#  define error milo_error
+# endif
 #else
 /// @brief Does nothing.
 /// @return void
-# define error(...)
+# define milo_error(...)
+
+# if (MILO_USE_SHORTCUTS)
+/// @brief Does nothing.
+/// @return void
+#  define error milo_error
+# endif
 #endif
 
-#if MILO_LVL >= MILO_LVL_FATAL
-/// @brief Prints a fatal message.
+#if (MILO_LVL) >= (MILO_LVL_FATAL)
+/// @brief Prints a fatal error message.
 /// @param format
-/// @return void
-# define fatal(format, ...)                                                    \
-   milo_printf(                                                                \
-     "[%s:%i " MILO_TEXT_ATTR_FATAL "fatal" MILO_TEXT_ATTR_CLEAR "] " format   \
-     "\n",                                                                     \
-     __MILO_FILENAME,                                                          \
-     __LINE__,                                                                 \
+/// @return the same as underlying
+# define milo_fatal(format, ...)                                               \
+   milo_eprintf(                                                               \
+     MILO_PREFIX_FORMAT format "\n",                                           \
+     milo_prefix_args(MILO_TA_FATAL, MILO_LVL_NAME_FATAL),                     \
      ##__VA_ARGS__                                                             \
    )
+
+# if (MILO_USE_SHORTCUTS)
+/// @brief Prints a fatal error message.
+/// @param format
+/// @return the same as underlying
+#  define fatal milo_fatal
+# endif
 #else
 /// @brief Does nothing.
-/// @param format
 /// @return void
-# define fatal(...)
+# define milo_fatal(...)
+
+# if (MILO_USE_SHORTCUTS)
+/// @brief Does nothing.
+/// @return void
+#  define fatal milo_fatal
+# endif
 #endif
 
 // makes MILO_LVL unique for each file

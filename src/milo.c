@@ -1,9 +1,7 @@
 #include "../include/milo.h"
 
-#include <string.h>
-
-const char *milo_get_filename(const char *filepath) {
-  const char *result = strrchr(filepath, '\\');
-  if (result == NULL) result = strrchr(filepath, '/');
-  return result == NULL ? filepath : result + 1;
+const char *milo_filename(const char *const filepath) {
+  for (const char *c = filepath; *c != '\0'; c++)
+    if (*c == '\\' || *c == '/') return c + 1;
+  return filepath;
 }
