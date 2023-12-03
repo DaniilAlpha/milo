@@ -210,5 +210,5 @@ And here is the list of all one-off definitions:
 |`MILO_LVL_NAME_ERROR`        |`"err"`                                                         |
 |`MILO_LVL_NAME_FATAL`        |`"ftl"`                                                         |
 |`MILO_PREFIX_FORMAT`         |`"[{arrt}{lvl}(clearattr) (fileattr){file}:{line}(clearattr)] "`|
-|`milo_prefix_args(attr, lvl)`|`(attr), (lvl), MILO_FILE, MILO_LINE`                           |
+|`milo_prefix_args(attr, lvl)`|`attr, lvl, MILO_FILE, MILO_LINE`                               |
 |`MILO_USE_SHORTCUTS`         |`1`                                                             |
