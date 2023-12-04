@@ -14,6 +14,39 @@ extern "C"
   const char *
   milo_filename(const char *const filepath);
 
+# ifdef MILO_IMPL
+const char *milo_filename(const char *const filepath) {
+  for (const char *c = filepath; *c != '\0'; c++)
+    if (*c == '\\' || *c == '/') return c + 1;
+  return filepath;
+}
+# endif
+
+/** shared **/
+
+// lvls
+
+# define MILO_LVL_ALL    MILO_LVL_TRACE
+# define MILO_LVL_TRACE  (5)
+# define MILO_LVL_INFO   (4)
+# define MILO_LVL_WARN   (3)
+# define MILO_LVL_ERROR  (2)
+# define MILO_LVL_FATAL  (1)
+# define MILO_LVL_SILENT MILO_LVL_NONE
+# define MILO_LVL_NONE   (0)
+
+// formatting
+
+# define MILO_FILE (milo_filename(__FILE__))
+# define MILO_LINE (__LINE__)
+# define MILO_FUNC (__func__)
+
+/** config **/
+
+# ifdef MILO_CONFIG
+#  include MILO_CONFIG
+# endif
+
 // `printf` and `eprintf`
 
 # if (!defined milo_printf)
@@ -29,16 +62,8 @@ extern "C"
 #  define milo_eprintf milo_printf
 # endif
 
-// levels
+// default lvl
 
-# define MILO_LVL_ALL    MILO_LVL_TRACE
-# define MILO_LVL_TRACE  (5)
-# define MILO_LVL_INFO   (4)
-# define MILO_LVL_WARN   (3)
-# define MILO_LVL_ERROR  (2)
-# define MILO_LVL_FATAL  (1)
-# define MILO_LVL_SILENT MILO_LVL_NONE
-# define MILO_LVL_NONE   (0)
 # ifndef MILO_DEFAULT_LVL
 #  define MILO_DEFAULT_LVL MILO_LVL_INFO
 # endif
@@ -77,9 +102,7 @@ extern "C"
 #  define MILO_LVL_NAME_FATAL ("ftl")
 # endif
 
-# define MILO_FILE (milo_filename(__FILE__))
-# define MILO_LINE (__LINE__)
-# define MILO_FUNC (__func__)
+// prefix format
 
 # if (!defined MILO_PREFIX_FORMAT && !defined milo_prefix_args)
 #  define MILO_PREFIX_FORMAT                                                   \
@@ -88,11 +111,7 @@ extern "C"
 #  define milo_prefix_args(attr, lvl) (attr), (lvl), MILO_FILE, MILO_LINE
 # endif
 
-# ifndef MILO_USE_SHORTCUTS
-#  define MILO_USE_SHORTCUTS (1)
-# endif
-
-#else  // undefine old macros
+#else
 # undef milo_trace
 # undef milo_info
 # undef milo_warn
@@ -106,6 +125,10 @@ extern "C"
 
 #ifndef MILO_LVL
 # define MILO_LVL MILO_DEFAULT_LVL
+#endif
+
+#ifndef MILO_USE_SHORTCUTS
+# define MILO_USE_SHORTCUTS (1)
 #endif
 
 #if (MILO_LVL) >= (MILO_LVL_ALL)
@@ -253,5 +276,7 @@ extern "C"
 # endif
 #endif
 
-// makes MILO_LVL unique for each file
+// this should be unique for each file
+
 #undef MILO_LVL
+#undef MILO_USE_SHORTCUTS
