@@ -16,9 +16,10 @@ extern "C"
 
 # ifdef MILO_IMPL
 const char *milo_filename(const char *const filepath) {
+  const char *filename = filepath;
   for (const char *c = filepath; *c != '\0'; c++)
-    if (*c == '\\' || *c == '/') return c + 1;
-  return filepath;
+    if (*c == '\\' || *c == '/') filename = c + 1;
+  return filename;
 }
 # endif
 
