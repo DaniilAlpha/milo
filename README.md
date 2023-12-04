@@ -1,5 +1,5 @@
 # MiLo (Micro Logging)
-(Almost) plain macro zero-dependency single-file library to get rid of boilerplate logging code although keet them pretty.
+(Almost) plain macro zero-dependency single-file library to get rid of boilerplate logging code although keep them pretty.
 
 ## Output example
 
@@ -9,7 +9,7 @@ Default output looks like this (screen from VSCode terminal):
   <img src="https://raw.githubusercontent.com/DaniilAlpha/milo/main/example.png" alt="example output" />
 </p>
 
-Although, library is fully customizable (see the section below).
+Although the library is customizable (refer to the section below).
 
 ## Usage example
 
@@ -18,7 +18,7 @@ Although, library is fully customizable (see the section below).
 ```c
 // foo.c
 
-// define this in your main file to allow milo to implement itself
+// define this in your main file to allow MiLo to implement itself
 #define MILO_IMPL 
 
 // ...other includes...
@@ -46,7 +46,7 @@ Available `MILO_LVL`s:
 - `MILO_LVL_FATAL`
 - `MILO_LVL_NONE` (alias `MILO_LVL_SILENT`)
 
-By default `MILO_LVL` is `MILO_LVL_INFO`, but can be changed by redefining `MILO_DEFAULT_LVL` at build level (more on that later).
+By default, the `MILO_LVL` is set to `MILO_LVL_INFO`, but you can modify it by redefining `MILO_DEFAULT_LVL` at the build level. More info on this is provided later.
 
 ### Different log levels for different files
 
@@ -59,7 +59,7 @@ It is possible to use different `MILO_LVL`s for different files, for example:
 
 #include "foo.c" // example from above
 
-// this two lines should be undef all other incldes to prevent shadowing
+// this two lines should be under all other incldes to prevent shadowing
 #define MILO_LVL MILO_LVL_ERROR
 #include <milo.h>
 
@@ -72,7 +72,7 @@ void bar() {
 
 ### Shadowing
 
-Because MiLo "functions" are actually function-like macros, they will always shadow variables and functions with same names, to MiLo provides a `MILO_USE_SHORTCUTS` definition. It is enabled by default, but you may change it: 
+Because MiLo "functions" are actually function-like macros, they will always shadow variables and functions with the same name. MiLo provides a `MILO_USE_SHORTCUTS` definition to adreee the situation. It is enabled by default, but can be changed if necessary: 
 
 ```c
 #define MILO_USE_SHORTCUTS (0) 
@@ -83,7 +83,7 @@ int check_unwanted_condition() {
   int error = 0;
 
   if (unwanted_condition) {
-    // now functions from milo are called like this
+    // now functions from MiLo are called like this
     milo_error("unexpected unwanted condition!"); 
     error = 1;
   }
@@ -94,11 +94,11 @@ int check_unwanted_condition() {
 }
 ```
 
-Same as `MILO_LVL`, this is separate for each time you include the library.
+Like `MILO_LVL`, this is separate for each instance of including the library.
 
 ## Customization
 
-There are quite a lot options to customize:
+There are quite a plenty of options to customize:
 | definition                | default value                                          | description                        |
 | ---                       | ---                                                    | ---                                |
 |`milo_printf(fmt, ...)`    |`printf(fmt, ...)`                                      | Used in `trace`, `info` and `warn` |
@@ -120,18 +120,17 @@ There are quite a lot options to customize:
 |`MILO_PREFIX_FORMAT`       |`"(atcl)[{at}{lvl}(atcl) (atfile){file}:{line}(atcl)] "`| Default format for the log prefix  |
 |`milo_prefix_args(at, lvl)`|`at, lvl, MILO_FILE, MILO_LINE`                         | Arguments for the log prefix       |
 
-> `MILO_TA_FILE`, `MILO_TA_CLEAR`, `MILO_PREFIX_FORMAT` and `milo_prefix_args` mustn't include parenthesis, because they rely on string concatenation and other tricks.
+> `MILO_TA_FILE`, `MILO_TA_CLEAR`, `MILO_PREFIX_FORMAT` and `milo_prefix_args` must not include parentheses since they rely on string concatenation and other macro tricks.
 
-> `MILO_TA_TRACE`, `MILO_TA_INFO`, `MILO_TA_WARN`, `MILO_TA_ERROR`, `MILO_TA_FATAL`, `MILO_TA_FILE` and `MILO_TA_CLEAR` are only redefined together. If this group is defined, `MILO_NO_TA` has no effect.
+> `MILO_TA_TRACE`, `MILO_TA_INFO`, `MILO_TA_WARN`, `MILO_TA_ERROR`, `MILO_TA_FATAL`, `MILO_TA_FILE` and `MILO_TA_CLEAR` are redefined together. If this group is defined, `MILO_NO_TA` has no effect.
 
 > `MILO_LVL_NAME_TRACE`, `MILO_LVL_NAME_INFO`, `MILO_LVL_NAME_WARN`, `MILO_LVL_NAME_ERROR`, `MILO_LVL_NAME_FATAL` are only redefined together.
 
-> If `milo_printf` is defined, but `milo_eprintf` isn't, it will be the same as `milo_printf`. 
+> If `milo_printf` is defined, but `milo_eprintf` is not, it will be the same as `milo_printf`.
 
 ---
 
-All this definitions are shared between all includes, so should be redefined at global level to work properly. If definitions were at library level, they could be inconsistent across one project in multiple libraries. For example, let's make level names full words and in caps :
-
+All definitions must be globally defined to ensure proper functionality. If they were at the library level, inconsistencies could arise when using multiple libraries within a single project. For example, let's capitalize and spell out level names completely:
 ```bash
 # because this is bash, "FOO" becomes FOO in C, so we need additional quotes
 gcc -o main main.c foo.c bar.c   \
@@ -161,7 +160,7 @@ Writing a lot of definitions in build scripts is not very efficent, so MiLo prov
 gcc -o main main.c foo.c bar.c -D MILO_CONFIG='"milo_config.h"'
 ```
 
-In both cases this will look like this:
+In both cases, this will look like this:
 
 <p>
   <img src="https://raw.githubusercontent.com/DaniilAlpha/milo/main/example_custom_ta.png" alt="example output with custom text attributes" />
@@ -174,8 +173,9 @@ This part is not so obvious, so here is the small example:
 ```c
 // milo_config.h
 
-// in reality there will be a multiple definition error here except of some very
-// simple projects, so should be sent to a .c file, but this is just an example
+// in reality, there may be a multiple definition error here except for some very
+// simple projects. therefore, it should be sent to a .c file. After all, this is
+// just an example
 const char *milo_timestamp(const char *const fmt) {
   static char buf[32] = {0};
   static time_t t;
@@ -185,7 +185,7 @@ const char *milo_timestamp(const char *const fmt) {
   return buf;
 }
 
-// not really nesessary, but makes this mess at least a bit prettier
+// not really necessary, but makes this mess a bit prettier
 #define MILO_TIME (milo_timestamp("%D %H:%M:%S")) 
 
 // be careful not to include parentheses in these two definitions, as they rely on string concatenation
