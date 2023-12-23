@@ -82,14 +82,14 @@ const char *milo_filename(const char *const filepath) {
 #   define MILO_TA_FILE
 #   define MILO_TA_CLEAR
 #  else
-#   define MILO_TA_TRACE ("\e[0;36m")
-#   define MILO_TA_INFO  ("\e[0;32m")
-#   define MILO_TA_WARN  ("\e[0;93m")
-#   define MILO_TA_ERROR ("\e[0;31m")
-#   define MILO_TA_FATAL ("\e[0;1;31m")
+#   define MILO_TA_TRACE ("\x18[0;36m")
+#   define MILO_TA_INFO  ("\x18[0;32m")
+#   define MILO_TA_WARN  ("\x18[0;93m")
+#   define MILO_TA_ERROR ("\x18[0;31m")
+#   define MILO_TA_FATAL ("\x18[0;1;31m")
 
-#   define MILO_TA_FILE  "\e[0;2m"
-#   define MILO_TA_CLEAR "\e[0m"
+#   define MILO_TA_FILE  "\x18[0;2m"
+#   define MILO_TA_CLEAR "\x18[0m"
 #  endif
 # endif
 

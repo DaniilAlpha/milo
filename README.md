@@ -72,7 +72,7 @@ void bar() {
 
 ### Shadowing
 
-Because MiLo "functions" are actually function-like macros, they will always shadow variables and functions with the same name. MiLo provides a `MILO_USE_SHORTCUTS` definition to adreee the situation. It is enabled by default, but can be changed if necessary: 
+Because MiLo "functions" are actually function-like macros, they will always shadow variables and functions with the same name. MiLo provides a `MILO_USE_SHORTCUTS` definition to adress the situation. It is enabled by default, but can be changed if necessary: 
 
 ```c
 #define MILO_USE_SHORTCUTS (0) 
@@ -146,14 +146,14 @@ Writing a lot of definitions in build scripts is not very efficent, so MiLo prov
 ```c
 // milo_config.h
 
-#define MILO_TA_TRACE ("\e[0;2;36m")  // made slightly faded
-#define MILO_TA_INFO  ("\e[0;32m")    // default
-#define MILO_TA_WARN  ("\e[0;95m")    // yellow changed to purple
-#define MILO_TA_ERROR ("\e[0;31m")    // default
-#define MILO_TA_FATAL ("\e[0;1;41m")  // color background instead of text
+#define MILO_TA_TRACE ("\x18[0;2;36m")  // made slightly faded
+#define MILO_TA_INFO  ("\x18[0;32m")    // default
+#define MILO_TA_WARN  ("\x18[0;95m")    // yellow changed to purple
+#define MILO_TA_ERROR ("\x18[0;31m")    // default
+#define MILO_TA_FATAL ("\x18[0;1;41m")  // color background instead of text
 
-#define MILO_TA_FILE "\e[0;3;2m"  // made italic
-#define MILO_TA_CLEAR "\e[0;3m"   // all text except level names and filenames made italic
+#define MILO_TA_FILE "\x18[0;3;2m"  // made italic
+#define MILO_TA_CLEAR "\x18[0;3m"   // all text except level names and filenames made italic
 ```
 
 ```bash
@@ -192,7 +192,7 @@ const char *milo_timestamp(const char *const fmt) {
 #define MILO_PREFIX_FORMAT                                                     \
   MILO_TA_CLEAR                                                                \
   "\n"                                                                         \
-  "\e[0;35m"      /* custom TA for timestamp */                                \
+  "\x18[0;35m"      /* custom TA for timestamp */                                \
   "%s"            /* {timestamp} */                                            \
     MILO_TA_CLEAR /* clear custom TA */                                        \
   " - "                                                                        \
@@ -201,7 +201,7 @@ const char *milo_timestamp(const char *const fmt) {
   "%s"            /* {lvl} */                                                  \
     MILO_TA_CLEAR /* clear TA */                                               \
   " in function "                                                              \
-  "\e[0;37m"      /* custom TA for function */                                 \
+  "\x18[0;37m"      /* custom TA for function */                                 \
   "%s"            /* {function} */                                             \
     MILO_TA_CLEAR /* clear custom TA */                                        \
   "\n"
