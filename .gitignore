@@ -1,5 +1,4 @@
 .vscode/
 example/
-.clang-format
 component.mk
 CMakeLists.txt 
