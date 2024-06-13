@@ -158,7 +158,7 @@ char const *milo_filename(char const *const filepath) {
 #else
 /// @brief Does nothing.
 /// @return void
-#  define milo_trace(...)
+#  define milo_trace(...) ((void)0)
 
 #  if (MILO_USE_SHORTCUTS)
 /// @brief Does nothing.
@@ -187,7 +187,7 @@ char const *milo_filename(char const *const filepath) {
 #else
 /// @brief Does nothing.
 /// @return void
-#  define milo_info(...)
+#  define milo_info(...) ((void)0)
 
 #  if (MILO_USE_SHORTCUTS)
 /// @brief Does nothing.
@@ -216,7 +216,7 @@ char const *milo_filename(char const *const filepath) {
 #else
 /// @brief Does nothing.
 /// @return void
-#  define milo_warn(...)
+#  define milo_warn(...) ((void)0)
 
 #  if (MILO_USE_SHORTCUTS)
 /// @brief Does nothing.
@@ -245,7 +245,7 @@ char const *milo_filename(char const *const filepath) {
 #else
 /// @brief Does nothing.
 /// @return void
-#  define milo_error(...)
+#  define milo_error(...) ((void)0)
 
 #  if (MILO_USE_SHORTCUTS)
 /// @brief Does nothing.
@@ -274,7 +274,7 @@ char const *milo_filename(char const *const filepath) {
 #else
 /// @brief Does nothing.
 /// @return void
-#  define milo_fatal(...)
+#  define milo_fatal(...) ((void)0)
 
 #  if (MILO_USE_SHORTCUTS)
 /// @brief Does nothing.
