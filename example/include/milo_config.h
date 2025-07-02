@@ -1,33 +1,31 @@
+#ifndef MILO_CONFIG_H
+#define MILO_CONFIG_H
 
 #include <time.h>
+static char buf[32] = {0};
+static inline char const *milo_timestamp(char const *const fmt) {
+    time_t const t = time(NULL);
+    strftime(buf, sizeof(buf), fmt, localtime(&t));
+    return buf;
+}
 
-#ifndef MILO_TIME_H
-# define MILO_TIME_H
+#define MILO_TA_TRACE ("\033[0;30m")
+#define MILO_TA_INFO  ("\033[0;37m")
+#define MILO_TA_WARN  ("\033[0;93m")
+#define MILO_TA_ERROR ("\033[0;31m")
+#define MILO_TA_FATAL ("\033[0;41;30m")
 
-char const *milo_timestamp(char const *const fmt);
+#define MILO_TA_FILE  "\033[0;2m"
+#define MILO_TA_CLEAR "\033[0m"
+
+// be careful not to include parentheses in these two, as they rely heavily on
+// string concatenation
+#define MILO_PREFIX_FORMAT                                                     \
+    MILO_TA_CLEAR                                                              \
+    "%s"       /* {attr} */                                                    \
+    "%s"       /* {timestamp} */                                               \
+    " %s %s: " /* {file}:{line} {func} */
+#define MILO_PREFIX_ARGS(attr, lvl)                                            \
+    (attr), milo_timestamp("%b %d %H:%M:%S"), MILO_FILE, MILO_FUNC
 
 #endif
-
-// not really nesessary, but makes this mess at least a bit prettier
-#define MILO_TIME (milo_timestamp("%D %H:%M:%S"))
-
-// be careful not to include parentheses in these two definitions, as they rely
-// on string concatenation
-#define MILO_PREFIX_FORMAT                                                     \
-  MILO_TA_CLEAR                                                                \
-  "\n"                                                                         \
-  "\e[0;35m"      /* custom TA for timestamp */                                \
-  "%s"            /* {timestamp} */                                            \
-    MILO_TA_CLEAR /* clear custom TA */                                        \
-  " - "                                                                        \
-  "%s:%i: "       /* {file}&{line} */                                          \
-  "%s"            /* {attr} */                                                 \
-  "%s"            /* {lvl} */                                                  \
-    MILO_TA_CLEAR /* clear TA */                                               \
-  " in function "                                                              \
-  "\e[0;37m"      /* custom TA for function */                                 \
-  "%s"            /* {function} */                                             \
-    MILO_TA_CLEAR /* clear custom TA */                                        \
-  "\n"
-#define milo_prefix_args(attr, lvl)                                            \
-  MILO_TIME, MILO_FILE, MILO_LINE, (attr), (lvl), MILO_FUNC

@@ -1,4 +1,6 @@
-#define MILO_LVL MILO_LVL_WARN
-#include <milo.h>
+#ifndef FOO_H
+#define FOO_H
 
 void foo();
+
+#endif

@@ -6,9 +6,13 @@
 #include <milo.h>
 
 int main() {
-  trace("hello!!");
+    trace("This is a trace.");
+    info("This is an info.");
+    warn("This is a warning!");
+    error("This is an error!!");
+    fatal("This is a fatal error!!!");
 
-  foo();
+    foo();
 
-  return 0;
+    return 0;
 }

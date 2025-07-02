@@ -1,28 +1,14 @@
 /*****************
- ** shared part **
+ ** common part **
  *****************/
 
-#ifndef MILO_H
+#if (!defined MILO_H)
 #  define MILO_H
 
-#  ifdef __cplusplus
-extern "C"
-#  endif
-    /// @brief Extracts filename from filepath.
-    /// @param filepath file path or name
-    /// @return pointer to the first character after last occurence of `\\` or
-    /// `/`
-    char const *
-    milo_filename(char const *const filepath);
-
-#  ifdef MILO_IMPL
-char const *milo_filename(char const *const filepath) {
-    char const *filename = filepath;
-    for (char const *c = filepath; *c != '\0'; c++)
-        if (*c == '\\' || *c == '/') filename = c + 1;
-    return filename;
+static inline char const *internal__milo_filename(char const *filepath_end) {
+    while (filepath_end[0] != '/' && filepath_end[0] != '\\') filepath_end--;
+    return filepath_end;
 }
-#  endif
 
 /** shared **/
 
@@ -39,7 +25,11 @@ char const *milo_filename(char const *const filepath) {
 
 // formatting
 
-#  define MILO_FILE (milo_filename(__FILE__))
+#  if (defined __FILE_NAME__)
+#    define MILO_FILE __FILE_NAME__
+#  else
+#    define MILO_FILE (milo_filename(__FILE__ + sizeof(__FILE__)))
+#  endif
 #  define MILO_LINE (__LINE__)
 #  define MILO_FUNC (__func__)
 
@@ -58,8 +48,10 @@ char const *milo_filename(char const *const filepath) {
 #    endif
 
 #    include <stdio.h>
-#    define milo_printf(format, ...)  printf(format, ##__VA_ARGS__)
-#    define milo_eprintf(format, ...) fprintf(stderr, format, ##__VA_ARGS__)
+#    define milo_printf(format, ...)                                           \
+        (fprintf(stdout, format, ##__VA_ARGS__), fflush(stdout), (void)0)
+#    define milo_eprintf(format, ...)                                          \
+        (fprintf(stderr, format, ##__VA_ARGS__), fflush(stderr), (void)0)
 #  elif (!defined milo_eprintf)
 #    define milo_eprintf milo_printf
 #  endif
@@ -111,11 +103,14 @@ char const *milo_filename(char const *const filepath) {
 
 // prefix format
 
-#  if (!defined MILO_PREFIX_FORMAT && !defined milo_prefix_args)
+#  if (!defined MILO_PREFIX_FORMAT && !defined MILO_PREFIX_ARGS)
 #    define MILO_PREFIX_FORMAT                                                 \
-          MILO_TA_CLEAR "[%s%s" MILO_TA_CLEAR " " MILO_TA_FILE                 \
-                        "%s:%i" MILO_TA_CLEAR "] "  // space before log body
-#    define milo_prefix_args(attr, lvl) (attr), (lvl), MILO_FILE, MILO_LINE
+        MILO_TA_CLEAR "[%s%s" MILO_TA_CLEAR " " MILO_TA_FILE                   \
+                      "%s:%i" MILO_TA_CLEAR "] "
+#    define MILO_PREFIX_ARGS(attr, lvl) (attr), (lvl), MILO_FILE, MILO_LINE
+#  endif
+#  if (!defined MILO_SUFFIX_FORMAT)
+#    define MILO_SUFFIX_FORMAT MILO_TA_CLEAR "\n"
 #  endif
 
 #else
@@ -127,7 +122,7 @@ char const *milo_filename(char const *const filepath) {
 #endif
 
 /***************
- ** sole part **
+ ** unit part **
  ***************/
 
 #ifndef MILO_LVL
@@ -139,151 +134,110 @@ char const *milo_filename(char const *const filepath) {
 #endif
 
 #if (MILO_LVL) >= (MILO_LVL_ALL)
-/// @brief Prints a trace message.
-/// @param format
-/// @return the same as underlying
+/// Prints a trace message.
 #  define milo_trace(format, ...)                                              \
       milo_printf(                                                             \
-          MILO_PREFIX_FORMAT format "\n",                                      \
-          milo_prefix_args(MILO_TA_TRACE, MILO_LVL_NAME_TRACE),                \
+          MILO_PREFIX_FORMAT format MILO_SUFFIX_FORMAT,                        \
+          MILO_PREFIX_ARGS(MILO_TA_TRACE, MILO_LVL_NAME_TRACE),                \
           ##__VA_ARGS__                                                        \
       )
-
 #  if (MILO_USE_SHORTCUTS)
-/// @brief Prints a trace message.
-/// @param format
-/// @return the same as underlying
+/// Prints a trace message.
 #    define trace milo_trace
 #  endif
 #else
-/// @brief Does nothing.
-/// @return void
+/// Does nothing.
 #  define milo_trace(...) ((void)0)
-
 #  if (MILO_USE_SHORTCUTS)
-/// @brief Does nothing.
-/// @return void
+/// Does nothing.
 #    define trace milo_trace
 #  endif
 #endif
 
 #if (MILO_LVL) >= (MILO_LVL_INFO)
-/// @brief Prints an info message.
-/// @param format
-/// @return the same as underlying
+/// Prints an info message.
 #  define milo_info(format, ...)                                               \
       milo_printf(                                                             \
-          MILO_PREFIX_FORMAT format "\n",                                      \
-          milo_prefix_args(MILO_TA_INFO, MILO_LVL_NAME_INFO),                  \
+          MILO_PREFIX_FORMAT format MILO_SUFFIX_FORMAT,                        \
+          MILO_PREFIX_ARGS(MILO_TA_INFO, MILO_LVL_NAME_INFO),                  \
           ##__VA_ARGS__                                                        \
       )
-
 #  if (MILO_USE_SHORTCUTS)
-/// @brief Prints an info message.
-/// @param format
-/// @return the same as underlying
+/// Prints an info message.
 #    define info milo_info
 #  endif
 #else
-/// @brief Does nothing.
-/// @return void
+/// Does nothing.
 #  define milo_info(...) ((void)0)
-
 #  if (MILO_USE_SHORTCUTS)
-/// @brief Does nothing.
-/// @return void
+/// Does nothing.
 #    define info milo_info
 #  endif
 #endif
 
 #if (MILO_LVL) >= (MILO_LVL_WARN)
-/// @brief Prints a warning message.
-/// @param format
-/// @return the same as underlying
+/// Prints a warning message.
 #  define milo_warn(format, ...)                                               \
       milo_printf(                                                             \
-          MILO_PREFIX_FORMAT format "\n",                                      \
-          milo_prefix_args(MILO_TA_WARN, MILO_LVL_NAME_WARN),                  \
+          MILO_PREFIX_FORMAT format MILO_SUFFIX_FORMAT,                        \
+          MILO_PREFIX_ARGS(MILO_TA_WARN, MILO_LVL_NAME_WARN),                  \
           ##__VA_ARGS__                                                        \
       )
-
 #  if (MILO_USE_SHORTCUTS)
-/// @brief Prints a warning message.
-/// @param format
-/// @return the same as underlying
+/// Prints a warning message.
 #    define warn milo_warn
 #  endif
 #else
-/// @brief Does nothing.
-/// @return void
+/// Does nothing.
 #  define milo_warn(...) ((void)0)
-
 #  if (MILO_USE_SHORTCUTS)
-/// @brief Does nothing.
-/// @return void
+/// Does nothing.
 #    define warn milo_warn
 #  endif
 #endif
 
 #if (MILO_LVL) >= (MILO_LVL_ERROR)
-/// @brief Prints an error message.
-/// @param format
-/// @return the same as underlying
+/// Prints an error message.
 #  define milo_error(format, ...)                                              \
       milo_eprintf(                                                            \
-          MILO_PREFIX_FORMAT format "\n",                                      \
-          milo_prefix_args(MILO_TA_ERROR, MILO_LVL_NAME_ERROR),                \
+          MILO_PREFIX_FORMAT format MILO_SUFFIX_FORMAT,                        \
+          MILO_PREFIX_ARGS(MILO_TA_ERROR, MILO_LVL_NAME_ERROR),                \
           ##__VA_ARGS__                                                        \
       )
-
 #  if (MILO_USE_SHORTCUTS)
-/// @brief Prints an error message.
-/// @param format
-/// @return the same as underlying
+/// Prints an error message.
 #    define error milo_error
 #  endif
 #else
-/// @brief Does nothing.
-/// @return void
+/// Does nothing.
 #  define milo_error(...) ((void)0)
-
 #  if (MILO_USE_SHORTCUTS)
-/// @brief Does nothing.
-/// @return void
+/// Does nothing.
 #    define error milo_error
 #  endif
 #endif
 
 #if (MILO_LVL) >= (MILO_LVL_FATAL)
-/// @brief Prints a fatal error message.
-/// @param format
-/// @return the same as underlying
+/// Prints a fatal error message.
 #  define milo_fatal(format, ...)                                              \
       milo_eprintf(                                                            \
-          MILO_PREFIX_FORMAT format "\n",                                      \
-          milo_prefix_args(MILO_TA_FATAL, MILO_LVL_NAME_FATAL),                \
+          MILO_PREFIX_FORMAT format MILO_SUFFIX_FORMAT,                        \
+          MILO_PREFIX_ARGS(MILO_TA_FATAL, MILO_LVL_NAME_FATAL),                \
           ##__VA_ARGS__                                                        \
       )
-
 #  if (MILO_USE_SHORTCUTS)
-/// @brief Prints a fatal error message.
-/// @param format
-/// @return the same as underlying
+/// Prints a fatal error message.
 #    define fatal milo_fatal
 #  endif
 #else
-/// @brief Does nothing.
-/// @return void
+/// Does nothing.
 #  define milo_fatal(...) ((void)0)
-
 #  if (MILO_USE_SHORTCUTS)
-/// @brief Does nothing.
-/// @return void
+/// Does nothing.
 #    define fatal milo_fatal
 #  endif
 #endif
 
-// this should be unique for each file
-
+// these should be unique for each file
 #undef MILO_LVL
 #undef MILO_USE_SHORTCUTS
