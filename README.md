@@ -120,6 +120,7 @@ There are a bunch of options to customize:
 |`MILO_LVL_NAME_FATAL`        |`"ftl"`                                                 | Log level name for `fatal`         |
 |`MILO_PREFIX_FORMAT`         |`"[{attr}{lvl} {file}:{line}] "`                        | Default format for the log prefix  |
 |`MILO_PREFIX_ARGS(attr, lvl)`|`attr, lvl, MILO_FILE, MILO_LINE`                       | Arguments for the log prefix       |
+|`MILO_SUFFIX_FORMAT`         |`"\n"`                                                  | Default format for the log suffix  |
 
 > `MILO_TA_FILE`, `MILO_TA_CLEAR`, `MILO_PREFIX_FORMAT` and `MILO_PREFIX_ARGS` must not include parentheses since they rely on string concatenation and other macro tricks.
 
