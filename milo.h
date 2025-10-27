@@ -10,7 +10,7 @@ static inline char const *internal__milo_filename(char const *filepath_end) {
     return filepath_end;
 }
 
-/** shared **/
+/*** defs ***/
 
 // lvls
 
@@ -33,10 +33,14 @@ static inline char const *internal__milo_filename(char const *filepath_end) {
 #  define MILO_LINE (__LINE__)
 #  define MILO_FUNC (__func__)
 
-/** config **/
+/*** config ***/
 
 #  ifdef MILO_CONFIG
 #    include MILO_CONFIG
+#  endif
+
+#  ifndef MILO_DEFAULT_LVL
+#    define MILO_DEFAULT_LVL MILO_LVL_INFO
 #  endif
 
 // `printf` and `eprintf`
@@ -54,12 +58,6 @@ static inline char const *internal__milo_filename(char const *filepath_end) {
         (fprintf(stderr, format, ##__VA_ARGS__), fflush(stderr), (void)0)
 #  elif (!defined milo_eprintf)
 #    define milo_eprintf milo_printf
-#  endif
-
-// default lvl
-
-#  ifndef MILO_DEFAULT_LVL
-#    define MILO_DEFAULT_LVL MILO_LVL_INFO
 #  endif
 
 // text attributes
