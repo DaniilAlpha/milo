@@ -28,7 +28,7 @@ static inline char const *internal__milo_filename(char const *filepath_end) {
 #  if (defined __FILE_NAME__)
 #    define MILO_FILE __FILE_NAME__
 #  else
-#    define MILO_FILE (milo_filename(__FILE__ + sizeof(__FILE__)))
+#    define MILO_FILE (internal__milo_filename(__FILE__ + sizeof(__FILE__) - 1))
 #  endif
 #  define MILO_LINE (__LINE__)
 #  define MILO_FUNC (__func__)
